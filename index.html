@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BIOGAR - Biopestisida Alami dari Bawang Putih</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              garlic: "#F8F4E6",
+              "garlic-dark": "#8B7355",
+              "green-bio": "#22C55E",
+              "green-dark": "#16A34A",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      }
+      .card-shadow {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .hover-scale {
+        transition: transform 0.3s ease;
+      }
+      .hover-scale:hover {
+        transform: scale(1.05);
+      }
+      .nav-link {
+        position: relative;
+        transition: all 0.3s ease;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 50%;
+        background: #22c55e;
+        transition: all 0.3s ease;
+      }
+      .nav-link:hover::after {
+        width: 100%;
+        left: 0;
+      }
+      .floating {
+        animation: floating 3s ease-in-out infinite;
+      }
+      @keyframes floating {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-white">
+    <!-- Navigation -->
+    <nav
+      class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100"
+    >
+      <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div
+              class="w-10 h-10 bg-gradient-to-br from-green-bio to-green-dark rounded-lg flex items-center justify-center"
+            >
+              <span class="text-white font-bold text-lg">🧄</span>
+            </div>
+            <span class="text-2xl font-bold text-gray-800">BIOGAR</span>
+          </div>
+          <div class="hidden md:flex space-x-8">
+            <a
+              href="#home"
+              class="nav-link text-gray-700 hover:text-green-bio font-medium"
+              >Beranda</a
+            >
+            <a
+              href="#education"
+              class="nav-link text-gray-700 hover:text-green-bio font-medium"
+              >Edukasi</a
+            >
+            <a
+              href="#guide"
+              class="nav-link text-gray-700 hover:text-green-bio font-medium"
+              >Panduan</a
+            >
+            <a
+              href="#research"
+              class="nav-link text-gray-700 hover:text-green-bio font-medium"
+              >Penelitian</a
+            >
+            <button
+              onclick="showPage('calculator')"
+              class="bg-green-bio text-white px-4 py-2 rounded-lg hover:bg-green-dark transition-colors"
+            >
+              Kalkulator
+            </button>
+          </div>
+          <button class="md:hidden" onclick="toggleMobileMenu()">
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 bg-black/50 z-40 hidden">
+      <div class="fixed right-0 top-0 h-full w-64 bg-white p-6">
+        <button onclick="toggleMobileMenu()" class="absolute top-4 right-4">
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+        <div class="mt-12 space-y-4">
+          <a
+            href="#home"
+            class="block text-gray-700 hover:text-green-bio font-medium"
+            onclick="toggleMobileMenu()"
+            >Beranda</a
+          >
+          <a
+            href="#education"
+            class="block text-gray-700 hover:text-green-bio font-medium"
+            onclick="toggleMobileMenu()"
+            >Edukasi</a
+          >
+          <a
+            href="#guide"
+            class="block text-gray-700 hover:text-green-bio font-medium"
+            onclick="toggleMobileMenu()"
+            >Panduan</a
+          >
+          <a
+            href="#research"
+            class="block text-gray-700 hover:text-green-bio font-medium"
+            onclick="toggleMobileMenu()"
+            >Penelitian</a
+          >
+          <button
+            onclick="showPage('calculator'); toggleMobileMenu()"
+            class="w-full bg-green-bio text-white px-4 py-2 rounded-lg hover:bg-green-dark transition-colors"
+          >
+            Kalkulator
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Landing Page -->
+    <div id="landingPage">
+      <!-- Hero Section -->
+      <section
+        id="home"
+        class="min-h-screen flex items-center gradient-bg pt-20"
+      >
+        <div class="container mx-auto px-6">
+          <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="text-white">
+              <h1 class="text-5xl md:text-6xl font-bold mb-6 text-center">
+                BIOGAR
+              </h1>
+              <p class="text-xl md:text-2xl mb-4 text-green-50">
+                Biopestisida Alami dari Garlic (Bawang Putih)
+              </p>
+              <p class="text-lg mb-8 text-green-100 leading-relaxed">
+                Solusi ramah lingkungan untuk melindungi tanaman Anda dari hama
+                menggunakan kekuatan alami bawang putih. Aman, efektif, dan
+                mudah dibuat di rumah.
+              </p>
+              <p class="text-base mb-8 text-green-100 leading-relaxed">
+                Penelitian kami menunjukkan bahwa ekstrak bawang putih
+                mengandung senyawa allicin yang terbukti efektif sebagai
+                antimikroba dan anti-hama alami. Dengan BIOGAR, Anda dapat
+                mengurangi ketergantungan pada pestisida kimia yang berbahaya
+                bagi lingkungan dan kesehatan.
+              </p>
+              <div class="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="#education"
+                  class="bg-white text-green-bio px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center"
+                >
+                  Mulai Belajar
+                </a>
+                <button
+                  onclick="showPage('calculator')"
+                  class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-green-bio transition-colors"
+                >
+                  Simulasikan Takaran
+                </button>
+              </div>
+            </div>
+            <div class="relative">
+              <div class="floating">
+                <div
+                  class="w-80 h-80 mx-auto bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm"
+                >
+                  <div class="text-8xl">🧄</div>
+                </div>
+              </div>
+              <div
+                class="absolute -top-4 -left-4 w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center floating"
+                style="animation-delay: 0.5s"
+              >
+                <span class="text-2xl">🌱</span>
+              </div>
+              <div
+                class="absolute -bottom-4 -right-4 w-16 h-16 bg-red-400 rounded-full flex items-center justify-center floating"
+                style="animation-delay: 1s"
+              >
+                <span class="text-2xl">🐛</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Education Section -->
+      <section id="education" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">
+              Tentang Pestisida Alami
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+              Pelajari mengapa bawang putih adalah pilihan terbaik untuk
+              perlindungan tanaman yang ramah lingkungan
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            <div class="bg-white p-6 rounded-xl card-shadow hover-scale">
+              <div
+                class="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mb-4"
+              >
+                <span class="text-2xl">🌿</span>
+              </div>
+              <h3 class="text-xl font-semibold mb-3 text-gray-800">
+                Apa itu Pestisida Alami?
+              </h3>
+              <p class="text-gray-600">
+                Pestisida yang dibuat dari bahan-bahan alami seperti tumbuhan,
+                mineral, atau mikroorganisme yang aman bagi lingkungan dan
+                kesehatan.
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl card-shadow hover-scale">
+              <div
+                class="w-16 h-16 bg-yellow-100 rounded-lg flex items-center justify-center mb-4"
+              >
+                <span class="text-2xl">🧄</span>
+              </div>
+              <h3 class="text-xl font-semibold mb-3 text-gray-800">
+                Kenapa Bawang Putih?
+              </h3>
+              <p class="text-gray-600">
+                Mengandung senyawa allicin yang memiliki sifat antimikroba dan
+                anti-hama alami yang efektif melawan berbagai jenis serangga
+                pengganggu.
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl card-shadow hover-scale">
+              <div
+                class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-4"
+              >
+                <span class="text-2xl">⚡</span>
+              </div>
+              <h3 class="text-xl font-semibold mb-3 text-gray-800">
+                Keunggulan Alami
+              </h3>
+              <p class="text-gray-600">
+                Tidak meninggalkan residu berbahaya, tidak mencemari tanah dan
+                air, serta aman untuk manusia, hewan, dan serangga bermanfaat.
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl card-shadow hover-scale">
+              <div
+                class="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mb-4"
+              >
+                <span class="text-2xl">🎯</span>
+              </div>
+              <h3 class="text-xl font-semibold mb-3 text-gray-800">
+                Cara Kerja
+              </h3>
+              <p class="text-gray-600">
+                Allicin dalam bawang putih mengganggu sistem saraf serangga dan
+                menghasilkan aroma yang tidak disukai hama tanaman.
+              </p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-8 card-shadow">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+              Perbandingan Pestisida Alami vs Kimia
+            </h3>
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="border-b-2 border-gray-200">
+                    <th class="text-left py-4 px-6 font-semibold text-gray-800">
+                      Aspek
+                    </th>
+                    <th
+                      class="text-center py-4 px-6 font-semibold text-green-bio"
+                    >
+                      Pestisida Alami (BIOGAR)
+                    </th>
+                    <th
+                      class="text-center py-4 px-6 font-semibold text-red-500"
+                    >
+                      Pestisida Kimia
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-gray-100">
+                    <td class="py-4 px-6 font-medium">Keamanan Lingkungan</td>
+                    <td class="py-4 px-6 text-center text-green-bio">
+                      ✅ Ramah Lingkungan
+                    </td>
+                    <td class="py-4 px-6 text-center text-red-500">
+                      ❌ Mencemari Lingkungan
+                    </td>
+                  </tr>
+                  <tr class="border-b border-gray-100">
+                    <td class="py-4 px-6 font-medium">Residu pada Tanaman</td>
+                    <td class="py-4 px-6 text-center text-green-bio">
+                      ✅ Tidak Ada Residu
+                    </td>
+                    <td class="py-4 px-6 text-center text-red-500">
+                      ❌ Meninggalkan Residu
+                    </td>
+                  </tr>
+                  <tr class="border-b border-gray-100">
+                    <td class="py-4 px-6 font-medium">Biaya Produksi</td>
+                    <td class="py-4 px-6 text-center text-green-bio">
+                      ✅ Murah & Mudah Dibuat
+                    </td>
+                    <td class="py-4 px-6 text-center text-red-500">❌ Mahal</td>
+                  </tr>
+                  <tr class="border-b border-gray-100">
+                    <td class="py-4 px-6 font-medium">
+                      Keamanan untuk Manusia
+                    </td>
+                    <td class="py-4 px-6 text-center text-green-bio">
+                      ✅ Aman
+                    </td>
+                    <td class="py-4 px-6 text-center text-red-500">
+                      ❌ Berpotensi Berbahaya
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="py-4 px-6 font-medium">
+                      Dampak pada Serangga Bermanfaat
+                    </td>
+                    <td class="py-4 px-6 text-center text-green-bio">
+                      ✅ Tidak Membunuh
+                    </td>
+                    <td class="py-4 px-6 text-center text-red-500">
+                      ❌ Membunuh Semua
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Guide Section -->
+      <section id="guide" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">
+              Panduan Pembuatan Biospestisida
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+              Ikuti langkah-langkah mudah untuk membuat biopestisida BIOGAR di
+              rumah
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-12 items-start">
+            <div>
+              <h3 class="text-2xl font-bold text-gray-800 mb-6">
+                Alat & Bahan
+              </h3>
+              <div class="space-y-4 mb-8">
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="w-8 h-8 bg-green-bio rounded-full flex items-center justify-center"
+                  >
+                    <span class="text-white text-sm">🧄</span>
+                  </div>
+                  <span class="text-gray-700"
+                    >Bawang putih segar (250 gram)</span
+                  >
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center"
+                  >
+                    <span class="text-white text-sm">💧</span>
+                  </div>
+                  <span class="text-gray-700">Air bersih (1 liter)</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center"
+                  >
+                    <span class="text-white text-sm">🧼</span>
+                  </div>
+                  <span class="text-gray-700">Sabun cair (1 sendok teh)</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center"
+                  >
+                    <span class="text-white text-sm">🔨</span>
+                  </div>
+                  <span class="text-gray-700">Blender atau penumbuk</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center"
+                  >
+                    <span class="text-white text-sm">🏺</span>
+                  </div>
+                  <span class="text-gray-700">Botol spray untuk aplikasi</span>
+                </div>
+              </div>
+
+              <div class="bg-green-50 p-6 rounded-xl border border-green-200">
+                <h4 class="font-semibold text-green-800 mb-3">
+                  💡 Tips Penyimpanan
+                </h4>
+                <ul class="space-y-2 text-green-700">
+                  <li>• Simpan di tempat sejuk dan gelap</li>
+                  <li>• Gunakan dalam waktu 2-3 hari</li>
+                  <li>• Kocok sebelum digunakan</li>
+                  <li>• Jangan simpan di suhu panas</li>
+                </ul>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-2xl font-bold text-gray-800 mb-6">
+                Langkah Pembuatan
+              </h3>
+              <div class="space-y-6">
+                <div class="flex items-start space-x-4">
+                  <div
+                    class="w-10 h-10 bg-green-bio rounded-full flex items-center justify-center flex-shrink-0"
+                  >
+                    <span class="text-white font-bold">1</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-800 mb-2">
+                      Persiapan Bahan
+                    </h4>
+                    <p class="text-gray-600">
+                      Kupas dan potong bawang putih menjadi bagian kecil untuk
+                      memudahkan proses penghalusan.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                  <div
+                    class="w-10 h-10 bg-green-bio rounded-full flex items-center justify-center flex-shrink-0"
+                  >
+                    <span class="text-white font-bold">2</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-800 mb-2">
+                      Penghalusan
+                    </h4>
+                    <p class="text-gray-600">
+                      Haluskan bawang putih dengan blender atau tumbuk hingga
+                      menjadi pasta halus. Tambahkan sedikit air jika perlu.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                  <div
+                    class="w-10 h-10 bg-green-bio rounded-full flex items-center justify-center flex-shrink-0"
+                  >
+                    <span class="text-white font-bold">3</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-800 mb-2">Perendaman</h4>
+                    <p class="text-gray-600">
+                      Rendam pasta bawang putih dalam 1 liter air selama 24 jam
+                      untuk mengekstrak senyawa aktif allicin.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                  <div
+                    class="w-10 h-10 bg-green-bio rounded-full flex items-center justify-center flex-shrink-0"
+                  >
+                    <span class="text-white font-bold">4</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-800 mb-2">
+                      Penyaringan
+                    </h4>
+                    <p class="text-gray-600">
+                      Saring larutan dengan kain halus atau saringan untuk
+                      mendapatkan ekstrak yang bersih.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                  <div
+                    class="w-10 h-10 bg-green-bio rounded-full flex items-center justify-center flex-shrink-0"
+                  >
+                    <span class="text-white font-bold">5</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-800 mb-2">Finalisasi</h4>
+                    <p class="text-gray-600">
+                      Tambahkan 1 sendok teh sabun cair sebagai perekat dan aduk
+                      rata. Biopestisida BIOGAR siap digunakan!
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-8 text-center">
+                <button
+                  class="bg-green-bio text-white px-6 py-3 rounded-lg hover:bg-green-dark transition-colors font-semibold"
+                >
+                  📄 Download Panduan PDF
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Research Section -->
+      <section id="research" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">
+              Hasil Penelitian & Uji Efektivitas
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+              Data hasil pengujian menunjukkan efektivitas BIOGAR dalam
+              mengendalikan hama tanaman
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div class="bg-white p-8 rounded-xl card-shadow">
+              <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                Data Pengamatan Hama
+              </h3>
+              <div class="overflow-x-auto">
+                <table class="w-full">
+                  <thead>
+                    <tr class="border-b-2 border-gray-200">
+                      <th
+                        class="text-left py-3 px-4 font-semibold text-gray-800"
+                      >
+                        Hari
+                      </th>
+                      <th
+                        class="text-center py-3 px-4 font-semibold text-red-500"
+                      >
+                        Kontrol
+                      </th>
+                      <th
+                        class="text-center py-3 px-4 font-semibold text-green-bio"
+                      >
+                        BIOGAR
+                      </th>
+                      <th
+                        class="text-center py-3 px-4 font-semibold text-blue-500"
+                      >
+                        Efektivitas
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="researchTable">
+                    <tr class="border-b border-gray-100">
+                      <td class="py-3 px-4 font-medium">Hari 1</td>
+                      <td class="py-3 px-4 text-center text-red-500">
+                        45 ekor
+                      </td>
+                      <td class="py-3 px-4 text-center text-green-bio">
+                        43 ekor
+                      </td>
+                      <td class="py-3 px-4 text-center text-blue-500">4.4%</td>
+                    </tr>
+                    <tr class="border-b border-gray-100">
+                      <td class="py-3 px-4 font-medium">Hari 2</td>
+                      <td class="py-3 px-4 text-center text-red-500">
+                        48 ekor
+                      </td>
+                      <td class="py-3 px-4 text-center text-green-bio">
+                        35 ekor
+                      </td>
+                      <td class="py-3 px-4 text-center text-blue-500">27.1%</td>
+                    </tr>
+                    <tr class="border-b border-gray-100">
+                      <td class="py-3 px-4 font-medium">Hari 3</td>
+                      <td class="py-3 px-4 text-center text-red-500">
+                        52 ekor
+                      </td>
+                      <td class="py-3 px-4 text-center text-green-bio">
+                        25 ekor
+                      </td>
+                      <td class="py-3 px-4 text-center text-blue-500">51.9%</td>
+                    </tr>
+                    <tr class="border-b border-gray-100">
+                      <td class="py-3 px-4 font-medium">Hari 4</td>
+                      <td class="py-3 px-4 text-center text-red-500">
+                        55 ekor
+                      </td>
+                      <td class="py-3 px-4 text-center text-green-bio">
+                        18 ekor
+                      </td>
+                      <td class="py-3 px-4 text-center text-blue-500">67.3%</td>
+                    </tr>
+                    <tr>
+                      <td class="py-3 px-4 font-medium">Hari 5</td>
+                      <td class="py-3 px-4 text-center text-red-500">
+                        58 ekor
+                      </td>
+                      <td class="py-3 px-4 text-center text-green-bio">
+                        12 ekor
+                      </td>
+                      <td class="py-3 px-4 text-center text-blue-500">79.3%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-xl card-shadow">
+              <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                Grafik Efektivitas
+              </h3>
+              <canvas id="effectivenessChart" width="400" height="300"></canvas>
+            </div>
+          </div>
+
+          <div class="mt-12 bg-white p-8 rounded-xl card-shadow">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+              Kesimpulan Penelitian
+            </h3>
+            <div class="grid md:grid-cols-3 gap-8">
+              <div class="text-center">
+                <div
+                  class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                >
+                  <span class="text-3xl font-bold text-green-bio">79%</span>
+                </div>
+                <h4 class="font-semibold text-gray-800 mb-2">
+                  Efektivitas Maksimal
+                </h4>
+                <p class="text-gray-600">
+                  Pengurangan hama hingga 79% pada hari ke-5 pengamatan
+                </p>
+              </div>
+              <div class="text-center">
+                <div
+                  class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                >
+                  <span class="text-3xl font-bold text-blue-500">3</span>
+                </div>
+                <h4 class="font-semibold text-gray-800 mb-2">Hari Optimal</h4>
+                <p class="text-gray-600">
+                  Efek signifikan mulai terlihat pada hari ke-3 setelah aplikasi
+                </p>
+              </div>
+              <div class="text-center">
+                <div
+                  class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                >
+                  <span class="text-3xl font-bold text-yellow-600">0</span>
+                </div>
+                <h4 class="font-semibold text-gray-800 mb-2">Efek Samping</h4>
+                <p class="text-gray-600">
+                  Tidak ada efek negatif pada tanaman atau lingkungan
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Calculator Page -->
+    <div id="calculatorPage" class="hidden min-h-screen pt-20">
+      <div class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">
+              Kalkulator Takaran BIOGAR
+            </h1>
+            <p class="text-xl text-gray-600">
+              Hitung takaran yang tepat untuk kebutuhan Anda
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div class="bg-white p-8 rounded-xl card-shadow">
+              <h2 class="text-2xl font-bold text-gray-800 mb-6">Input Bahan</h2>
+              <div class="space-y-6">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Jumlah Bawang Putih (gram)</label
+                  >
+                  <input
+                    type="number"
+                    id="garlicAmount"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-bio focus:border-transparent"
+                    placeholder="250"
+                    value="250"
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Jumlah Air (ml)</label
+                  >
+                  <input
+                    type="number"
+                    id="waterAmount"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-bio focus:border-transparent"
+                    placeholder="1000"
+                    value="1000"
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Luas Area Penyemprotan (m²)</label
+                  >
+                  <input
+                    type="number"
+                    id="areaSize"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-bio focus:border-transparent"
+                    placeholder="10"
+                    value="10"
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Tambahan Bahan (Opsional)</label
+                  >
+                  <div class="space-y-3">
+                    <div class="flex items-center">
+                      <input
+                        type="checkbox"
+                        id="addChili"
+                        class="mr-3 h-4 w-4 text-green-bio border-gray-300 rounded focus:ring-green-bio"
+                      />
+                      <label for="addChili" class="text-gray-700"
+                        >Tambah Cabai (50g)</label
+                      >
+                    </div>
+                    <div class="flex items-center">
+                      <input
+                        type="checkbox"
+                        id="addLemongrass"
+                        class="mr-3 h-4 w-4 text-green-bio border-gray-300 rounded focus:ring-green-bio"
+                      />
+                      <label for="addLemongrass" class="text-gray-700"
+                        >Tambah Serai (30g)</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onclick="calculateDosage()"
+                  class="w-full bg-green-bio text-white py-3 rounded-lg hover:bg-green-dark transition-colors font-semibold"
+                >
+                  Hitung Takaran
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-xl card-shadow">
+              <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                Hasil Perhitungan
+              </h2>
+              <div id="calculationResult" class="space-y-4">
+                <div class="text-center text-gray-500 py-8">
+                  <span class="text-4xl mb-4 block">🧮</span>
+                  <p>
+                    Masukkan data dan klik "Hitung Takaran" untuk melihat hasil
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery Page -->
+    <div id="galleryPage" class="hidden min-h-screen pt-20">
+      <div class="container mx-auto px-6 py-12">
+        <div class="text-center mb-12">
+          <h1 class="text-4xl font-bold text-gray-800 mb-4">
+            Galeri & Dokumentasi
+          </h1>
+          <p class="text-xl text-gray-600">
+            Dokumentasi proses pembuatan dan hasil pengujian BIOGAR
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <div
+            class="bg-white rounded-xl overflow-hidden card-shadow hover-scale"
+          >
+            <div
+              class="h-64 bg-gradient-to-br from-green-200 to-green-300 flex items-center justify-center"
+            >
+              <span class="text-6xl">🧄</span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Persiapan Bawang Putih</h3>
+              <p class="text-gray-600">
+                Proses pengupasan dan pemotongan bawang putih segar
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-xl overflow-hidden card-shadow hover-scale"
+          >
+            <div
+              class="h-64 bg-gradient-to-br from-blue-200 to-blue-300 flex items-center justify-center"
+            >
+              <span class="text-6xl">🥤</span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Proses Ekstraksi</h3>
+              <p class="text-gray-600">
+                Penghalusan dan perendaman untuk mengekstrak allicin
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-xl overflow-hidden card-shadow hover-scale"
+          >
+            <div
+              class="h-64 bg-gradient-to-br from-yellow-200 to-yellow-300 flex items-center justify-center"
+            >
+              <span class="text-6xl">🌱</span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Aplikasi pada Tanaman</h3>
+              <p class="text-gray-600">Penyemprotan BIOGAR pada tanaman uji</p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-xl overflow-hidden card-shadow hover-scale"
+          >
+            <div
+              class="h-64 bg-gradient-to-br from-purple-200 to-purple-300 flex items-center justify-center"
+            >
+              <span class="text-6xl">📊</span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Pengamatan Hama</h3>
+              <p class="text-gray-600">
+                Monitoring dan pencatatan jumlah hama harian
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-xl overflow-hidden card-shadow hover-scale"
+          >
+            <div
+              class="h-64 bg-gradient-to-br from-red-200 to-red-300 flex items-center justify-center"
+            >
+              <span class="text-6xl">🔬</span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Analisis Laboratorium</h3>
+              <p class="text-gray-600">
+                Pengujian kandungan allicin dan senyawa aktif
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-xl overflow-hidden card-shadow hover-scale"
+          >
+            <div
+              class="h-64 bg-gradient-to-br from-green-200 to-green-300 flex items-center justify-center"
+            >
+              <span class="text-6xl">✅</span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Hasil Akhir</h3>
+              <p class="text-gray-600">
+                Tanaman sehat bebas hama setelah aplikasi BIOGAR
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-8 rounded-xl card-shadow">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+            Testimoni Pengguna
+          </h2>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <div class="flex items-center mb-4">
+                <div
+                  class="w-12 h-12 bg-green-bio rounded-full flex items-center justify-center"
+                >
+                  <span class="text-white font-bold">P</span>
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-semibold text-gray-800">Pak Budi</h4>
+                  <p class="text-gray-600 text-sm">Petani Sayuran</p>
+                </div>
+              </div>
+              <p class="text-gray-700 italic">
+                "BIOGAR sangat efektif untuk tanaman cabai saya. Hama berkurang
+                drastis dan tanaman tetap sehat. Yang paling penting, aman untuk
+                keluarga!"
+              </p>
+            </div>
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <div class="flex items-center mb-4">
+                <div
+                  class="w-12 h-12 bg-green-bio rounded-full flex items-center justify-center"
+                >
+                  <span class="text-white font-bold">I</span>
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-semibold text-gray-800">Ibu Sari</h4>
+                  <p class="text-gray-600 text-sm">Ibu Rumah Tangga</p>
+                </div>
+              </div>
+              <p class="text-gray-700 italic">
+                "Mudah dibuat di rumah dan bahan-bahannya mudah didapat. Tanaman
+                hias saya jadi bebas dari kutu daun. Terima kasih BIOGAR!"
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Downloads Page -->
+    <div id="downloadsPage" class="hidden min-h-screen pt-20">
+      <div class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">
+              QR Code & Unduhan
+            </h1>
+            <p class="text-xl text-gray-600">
+              Akses mudah dan materi pendukung BIOGAR
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div class="bg-white p-8 rounded-xl card-shadow text-center">
+              <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                QR Code Akses Cepat
+              </h2>
+              <div
+                class="w-48 h-48 mx-auto bg-gray-100 rounded-lg flex items-center justify-center mb-6"
+              >
+                <div class="text-6xl">📱</div>
+              </div>
+              <p class="text-gray-600 mb-4">
+                Scan QR Code ini untuk mengakses website BIOGAR langsung dari
+                smartphone Anda
+              </p>
+              <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                <p class="text-green-800 font-semibold">Perfect for:</p>
+                <ul class="text-green-700 text-sm mt-2">
+                  <li>• Pameran dan presentasi</li>
+                  <li>• Botol semprot BIOGAR</li>
+                  <li>• Sharing ke teman</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-xl card-shadow">
+              <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                Materi Unduhan
+              </h2>
+              <div class="space-y-4">
+                <div
+                  class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <div class="flex items-center space-x-3">
+                    <div
+                      class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center"
+                    >
+                      <span class="text-white text-sm">📄</span>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Panduan Lengkap BIOGAR
+                      </h4>
+                      <p class="text-gray-600 text-sm">PDF - 2.5 MB</p>
+                    </div>
+                  </div>
+                  <button
+                    class="bg-green-bio text-white px-4 py-2 rounded-lg hover:bg-green-dark transition-colors"
+                  >
+                    Download
+                  </button>
+                </div>
+
+                <div
+                  class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <div class="flex items-center space-x-3">
+                    <div
+                      class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center"
+                    >
+                      <span class="text-white text-sm">📊</span>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Data Hasil Penelitian
+                      </h4>
+                      <p class="text-gray-600 text-sm">Excel - 1.2 MB</p>
+                    </div>
+                  </div>
+                  <button
+                    class="bg-green-bio text-white px-4 py-2 rounded-lg hover:bg-green-dark transition-colors"
+                  >
+                    Download
+                  </button>
+                </div>
+
+                <div
+                  class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <div class="flex items-center space-x-3">
+                    <div
+                      class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center"
+                    >
+                      <span class="text-white text-sm">🎨</span>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Infografis BIOGAR
+                      </h4>
+                      <p class="text-gray-600 text-sm">PNG - 3.1 MB</p>
+                    </div>
+                  </div>
+                  <button
+                    class="bg-green-bio text-white px-4 py-2 rounded-lg hover:bg-green-dark transition-colors"
+                  >
+                    Download
+                  </button>
+                </div>
+
+                <div
+                  class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <div class="flex items-center space-x-3">
+                    <div
+                      class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center"
+                    >
+                      <span class="text-white text-sm">🎥</span>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Video Tutorial
+                      </h4>
+                      <p class="text-gray-600 text-sm">MP4 - 25.4 MB</p>
+                    </div>
+                  </div>
+                  <button
+                    class="bg-green-bio text-white px-4 py-2 rounded-lg hover:bg-green-dark transition-colors"
+                  >
+                    Download
+                  </button>
+                </div>
+
+                <div
+                  class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <div class="flex items-center space-x-3">
+                    <div
+                      class="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center"
+                    >
+                      <span class="text-white text-sm">📋</span>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-800">
+                        Laporan KTI Lengkap
+                      </h4>
+                      <p class="text-gray-600 text-sm">PDF - 8.7 MB</p>
+                    </div>
+                  </div>
+                  <button
+                    class="bg-green-bio text-white px-4 py-2 rounded-lg hover:bg-green-dark transition-colors"
+                  >
+                    Download
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-12 bg-white p-8 rounded-xl card-shadow text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">
+              Bagikan BIOGAR
+            </h2>
+            <p class="text-gray-600 mb-6">
+              Bantu sebarkan manfaat biopestisida alami ini kepada lebih banyak
+              orang
+            </p>
+            <div class="flex justify-center space-x-4">
+              <button
+                class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                📘 Facebook
+              </button>
+              <button
+                class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors"
+              >
+                📱 WhatsApp
+              </button>
+              <button
+                class="bg-sky-500 text-white px-6 py-3 rounded-lg hover:bg-sky-600 transition-colors"
+              >
+                🐦 Twitter
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+      <div class="container mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-8">
+          <div>
+            <div class="flex items-center space-x-3 mb-4">
+              <div
+                class="w-10 h-10 bg-gradient-to-br from-green-bio to-green-dark rounded-lg flex items-center justify-center"
+              >
+                <span class="text-white font-bold text-lg">🧄</span>
+              </div>
+              <span class="text-2xl font-bold">BIOGAR</span>
+            </div>
+            <p class="text-gray-300">
+              Solusi biopestisida alami dari bawang putih untuk pertanian yang
+              ramah lingkungan dan berkelanjutan.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Navigasi</h4>
+            <ul class="space-y-2 text-gray-300">
+              <li>
+                <a href="#home" class="hover:text-green-bio transition-colors"
+                  >Beranda</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#education"
+                  class="hover:text-green-bio transition-colors"
+                  >Edukasi</a
+                >
+              </li>
+              <li>
+                <a href="#guide" class="hover:text-green-bio transition-colors"
+                  >Panduan</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#research"
+                  class="hover:text-green-bio transition-colors"
+                  >Penelitian</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Fitur</h4>
+            <ul class="space-y-2 text-gray-300">
+              <li>
+                <button
+                  onclick="showPage('calculator')"
+                  class="hover:text-green-bio transition-colors"
+                >
+                  Kalkulator
+                </button>
+              </li>
+              <li>
+                <button
+                  onclick="showPage('gallery')"
+                  class="hover:text-green-bio transition-colors"
+                >
+                  Galeri
+                </button>
+              </li>
+              <li>
+                <button
+                  onclick="showPage('downloads')"
+                  class="hover:text-green-bio transition-colors"
+                >
+                  Unduhan
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Kontak</h4>
+            <p class="text-gray-300 mb-2">Email: smkn1jakarta</p>
+            <p class="text-gray-300 mb-4">Telepon: +62 888 111 777</p>
+            <div class="flex space-x-3">
+              <div
+                class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-green-bio transition-colors cursor-pointer"
+              >
+                <span class="text-sm">📧</span>
+              </div>
+              <div
+                class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-green-bio transition-colors cursor-pointer"
+              >
+                <span class="text-sm">📱</span>
+              </div>
+              <div
+                class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-green-bio transition-colors cursor-pointer"
+              >
+                <span class="text-sm">🌐</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400"
+        >
+          <p>&copy; 2025 KIR KELOMPOK 3</p>
+        </div>
+      </div>
+    </footer>
+
+    <script></script>
+  </body>
+</html>
